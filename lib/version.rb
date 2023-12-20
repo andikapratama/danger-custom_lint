@@ -1,5 +1,5 @@
 # frozen_string_literal: true
 
-module FlutterLint
-  VERSION = '1.1.1'
+module FlutterCustomLint
+  VERSION = '1.0.0'
 end

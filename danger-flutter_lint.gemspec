@@ -4,11 +4,11 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'version'
 
 Gem::Specification.new do |spec|
-  spec.name          = 'danger-flutter_lint'
-  spec.version       = FlutterLint::VERSION
-  spec.authors       = ['Mateusz Szklarek']
-  spec.email         = ['mateusz.szklarek@gmail.com']
-  spec.summary       = 'A Danger Plugin to lint dart files using flutter analyze command line interface.'
+  spec.name          = 'danger-flutter_custom_lint'
+  spec.version       = FlutterCustomLint::VERSION
+  spec.authors       = ['Andika Pratama']
+  spec.email         = ['andika@bukalapak.com']
+  spec.summary       = 'A Danger Plugin to lint dart files using custom_lint.'
   spec.homepage      = 'https://github.com/mateuszszklarek/danger-flutterlint'
   spec.license       = 'MIT'
 
