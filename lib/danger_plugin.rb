@@ -29,6 +29,7 @@ module Danger
   def lint_report(_files)
     result = `cd #{package} && flutter pub get && flutter pub run custom_lint`
     raise CustomLintUnavailableError if result.include?('Could not find package "custom_lint')
+
     result
   end
 
