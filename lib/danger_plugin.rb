@@ -13,24 +13,32 @@ module Danger
 
     # Pass modified_files (array of string) to allow only run custom_lint for modified packages
     def lint_packages(packages, &filter_block)
-      @packages = packages
-      # Allow modify result with filter block statement
-      # Array<FlutterViolation>(:rule, :description, :file, :line, :column)
-      report = lint_report(@files)
 
-      violations = parse_custom_lint_violations(report)
+      violations = []
+      packages.each do |package|
+        report = lint_report(package)
+        violations += parse_custom_lint_violations(report)
+      end
+
       violations = violations.filter { |violation| filter_block.call(violation) } if filter_block
 
-      inline_mode ? send_inline_comments(violations) : send_markdown_comment(violations)
+      send_markdown_comment(violations)
     end
 
     private
 
     # return flutter report
-    def lint_report(_files)
-      result = `cd #{package} && flutter pub get && flutter pub run custom_lint && cd ~-`
-      puts 'LINTREPORT'
+    def lint_report(package)
+      puts 'LINT REPORT'
+      unless package.chomp.empty?
+        `cd #{package}`
+      end
+      result = `flutter pub get && flutter pub run custom_lint`
       puts result
+
+      unless package.chomp.empty?
+        `cd ~-`
+      end
       raise CustomLintUnavailableError if result.include?('Could not find package "custom_lint')
 
       result
