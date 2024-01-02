@@ -1,11 +1,6 @@
-# coding: utf-8
-lib = File.expand_path('../lib', __FILE__)
-$LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'version'
-
 Gem::Specification.new do |spec|
   spec.name          = 'danger-flutter_custom_lint'
-  spec.version       = FlutterCustomLint::VERSION
+  spec.version       = '1.0.0'
   spec.authors       = ['Andika Pratama']
   spec.email         = ['andika@bukalapak.com']
   spec.summary       = 'A Danger Plugin to lint dart files using custom_lint.'
