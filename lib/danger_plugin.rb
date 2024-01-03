@@ -29,6 +29,10 @@ module Danger
         violations += parse_custom_lint_violations(report)
       end
 
+      violations.each do |e|
+        puts e
+      end
+
       violations = violations.filter { |violation| filter_block.call(violation) } if filter_block
 
       send_markdown_comment(violations)
