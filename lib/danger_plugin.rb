@@ -46,6 +46,7 @@ module Danger
       is_root = package.chomp.empty?
       unless is_root
         puts `pwd`
+        puts 'using chdir'
         Dir.chdir(package) { puts `flutter pub get && flutter pub run custom_lint` }
         puts `pwd`
         puts "START CD #{cd}"
