@@ -47,6 +47,7 @@ module Danger
       unless is_root
         puts `pwd`
         puts `ls`
+        puts `cd example`
         cd = "cd #{package}"
         puts "START CD #{cd}"
         puts `#{cd}`
