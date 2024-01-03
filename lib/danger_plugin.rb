@@ -59,8 +59,8 @@ module Danger
     # return Array<FlutterViolation>
     def parse_custom_lint_violations(report)
       puts 'Parse Custom Lint Violations'
+      report = report.encode('utf-8', invalid: :replace, undef: :replace)
       puts report
-      report = report.encode('utf-8')
       return [] if report.empty? || report.include?('No issues found!')
 
       lines = report.split("\n")
