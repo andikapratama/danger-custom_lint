@@ -46,8 +46,9 @@ module Danger
       is_root = package.chomp.empty?
       unless is_root
         puts `pwd`
-        puts "START CD #{package}"
-        cd = `cd #{package}`
+        cd = "cd #{package}"
+        puts "START CD #{cd}"
+        puts `#{cd}`
         puts "DONE CD #{cd}"
       end
       result = `flutter pub get && flutter pub run custom_lint`
