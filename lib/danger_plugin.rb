@@ -42,7 +42,7 @@ module Danger
 
     # return flutter report
     def lint_report(package)
-      puts "PACKAGE #{package}"
+      puts "CUSTOM_LINT PACKAGE #{package}"
       is_root = package.chomp.empty?
       command = 'flutter pub get && flutter pub run custom_lint 2>&1'
       if is_root
@@ -53,17 +53,19 @@ module Danger
 
       raise CustomLintUnavailableError if result.include?('Could not find package "custom_lint')
 
-      result.encode('utf-8')
+      result.chomp
     end
 
     # return Array<FlutterViolation>
     def parse_custom_lint_violations(report)
-      puts "Parse Custom Lint Violations"
+      puts 'Parse Custom Lint Violations'
+      puts report
+      report = report.encode('utf-8')
       return [] if report.empty? || report.include?('No issues found!')
 
       lines = report.split("\n")
 
-      puts "Splitted"
+      puts 'Splitted'
       lines.map.with_index do |line, index|
         next unless line.match?(/ • /)
 
