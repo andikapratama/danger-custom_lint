@@ -42,22 +42,16 @@ module Danger
 
     # return flutter report
     def lint_report(package)
-      puts "LINT REPORT |#{package}|"
+      puts "PACKAGE #{package}"
       is_root = package.chomp.empty?
-      unless is_root
-        puts 'using chdir hmmm'
-        puts `pwd`
-        puts 'START CD'
-        Dir.chdir(package) { puts `flutter pub get && flutter pub run custom_lint` }
-        puts 'DONE CD'
+      command = 'flutter pub get && flutter pub run custom_lint 2>&1'
+      if is_root
+        result = `#{command}`
+      else
+        Dir.chdir(package) { result = `#{command}` }
       end
-      result = `flutter pub get && flutter pub run custom_lint`
       puts result
 
-      unless is_root
-        cd = `cd ~-`
-        puts "CD back #{cd}"
-      end
       raise CustomLintUnavailableError if result.include?('Could not find package "custom_lint')
 
       result
