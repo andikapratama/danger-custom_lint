@@ -45,8 +45,9 @@ module Danger
       puts "LINT REPORT |#{package}|"
       is_root = package.chomp.empty?
       unless is_root
+        puts "START CD #{package}"
         cd = `cd #{package}`
-        puts "CD #{cd}"
+        puts "DONE CD #{cd}"
       end
       result = `flutter pub get && flutter pub run custom_lint`
       puts result
