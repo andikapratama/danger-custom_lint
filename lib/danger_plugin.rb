@@ -45,8 +45,9 @@ module Danger
       puts "LINT REPORT |#{package}|"
       is_root = package.chomp.empty?
       unless is_root
-        puts `pwd`
         puts 'using chdir'
+        puts `pwd`
+        puts 'using chdir 2'
         Dir.chdir(package) { puts `flutter pub get && flutter pub run custom_lint` }
         puts `pwd`
         puts "START CD #{cd}"
