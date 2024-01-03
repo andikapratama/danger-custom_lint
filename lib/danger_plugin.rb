@@ -67,9 +67,9 @@ module Danger
 
       puts 'Splitted'
       lines.map.with_index do |line, index|
-        next unless line.match?(/ • /)
+        next unless line.match?(/ ��� /)
 
-        info = line.split('•').map(&:strip)
+        info = line.split('���').map(&:strip)
         file_line = info[0]
         file, line_number, column = file_line.split(':')
         description = info[1]
