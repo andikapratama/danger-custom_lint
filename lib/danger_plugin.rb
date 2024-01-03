@@ -11,8 +11,17 @@ module Danger
       end
     end
 
+    # Warning only, instead of fail
+    # Default to false
+    attr_accessor :warning_only
+
+    # Report 0 issues found on success
+    # Default to false
+    attr_accessor :report_on_success
+
     # Pass modified_files (array of string) to allow only run custom_lint for modified packages
     def lint_packages(packages, &filter_block)
+      @report_type = warning_only ? 'warn' : 'fail'
 
       violations = []
       packages.each do |package|
@@ -30,13 +39,14 @@ module Danger
     # return flutter report
     def lint_report(package)
       puts 'LINT REPORT'
-      unless package.chomp.empty?
+      is_root = package.to_s.chomp.empty?
+      unless is_root
         `cd #{package}`
       end
       result = `flutter pub get && flutter pub run custom_lint`
       puts result
 
-      unless package.chomp.empty?
+      unless is_root
         `cd ~-`
       end
       raise CustomLintUnavailableError if result.include?('Could not find package "custom_lint')
