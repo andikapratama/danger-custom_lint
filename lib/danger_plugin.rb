@@ -45,6 +45,7 @@ module Danger
       puts "LINT REPORT |#{package}|"
       is_root = package.chomp.empty?
       unless is_root
+        puts `pwd`
         puts "START CD #{package}"
         cd = `cd #{package}`
         puts "DONE CD #{cd}"
