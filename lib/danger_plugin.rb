@@ -45,13 +45,15 @@ module Danger
       puts "LINT REPORT |#{package}|"
       is_root = package.chomp.empty?
       unless is_root
-        `cd #{package}`
+        cd = `cd #{package}`
+        puts "CD #{cd}"
       end
       result = `flutter pub get && flutter pub run custom_lint`
       puts result
 
       unless is_root
-        `cd ~-`
+        cd = `cd ~-`
+        puts "CD back #{cd}"
       end
       raise CustomLintUnavailableError if result.include?('Could not find package "custom_lint')
 
