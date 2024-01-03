@@ -46,6 +46,7 @@ module Danger
       is_root = package.chomp.empty?
       unless is_root
         puts `pwd`
+        puts `ls`
         cd = "cd #{package}"
         puts "START CD #{cd}"
         puts `#{cd}`
