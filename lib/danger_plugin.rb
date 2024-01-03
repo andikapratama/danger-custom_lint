@@ -50,18 +50,20 @@ module Danger
       else
         Dir.chdir(package) { result = `#{command}` }
       end
-      puts result
 
       raise CustomLintUnavailableError if result.include?('Could not find package "custom_lint')
 
-      result
+      result.encode('utf-8')
     end
 
     # return Array<FlutterViolation>
     def parse_custom_lint_violations(report)
+      puts "Parse Custom Lint Violations"
       return [] if report.empty? || report.include?('No issues found!')
 
       lines = report.split("\n")
+
+      puts "Splitted"
       lines.map.with_index do |line, index|
         next unless line.match?(/ • /)
 
