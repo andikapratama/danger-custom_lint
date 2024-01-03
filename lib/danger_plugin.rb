@@ -25,7 +25,7 @@ module Danger
 
       violations = []
       packages.each do |package|
-        report = lint_report(package)
+        report = lint_report(package.to_s)
         violations += parse_custom_lint_violations(report)
       end
 
@@ -42,8 +42,8 @@ module Danger
 
     # return flutter report
     def lint_report(package)
-      puts 'LINT REPORT'
-      is_root = package.to_s.chomp.empty?
+      puts "LINT REPORT |#{package}|"
+      is_root = package.chomp.empty?
       unless is_root
         `cd #{package}`
       end
