@@ -29,10 +29,6 @@ module Danger
         violations += parse_custom_lint_violations(report)
       end
 
-      violations.each do |e|
-        puts e
-      end
-
       violations = violations.filter { |violation| filter_block.call(violation) } if filter_block
 
       send_markdown_comment(violations)
@@ -42,7 +38,7 @@ module Danger
 
     # return flutter report
     def lint_report(package)
-      puts "CUSTOM_LINT PACKAGE #{package}"
+      puts "Running Custom Lint on #{package}"
       is_root = package.chomp.empty?
       command = 'flutter pub get && flutter pub run custom_lint 2>&1'
       if is_root
@@ -60,12 +56,10 @@ module Danger
     def parse_custom_lint_violations(report)
       puts 'Parse Custom Lint Violations'
       report = report.encode('utf-8', invalid: :replace, undef: :replace)
-      puts report
       return [] if report.empty? || report.include?('No issues found!')
 
       lines = report.split("\n")
 
-      puts 'Splitted'
       lines.map.with_index do |line, index|
         next unless line.match?(/ ��� /)
 
@@ -74,7 +68,6 @@ module Danger
         file, line_number, column = file_line.split(':')
         description = info[1]
         rule = info[2]
-        puts "#{info.first} | #{info[1]}"
         FlutterViolation.new(rule, description, file, line_number.to_i, column.to_i)
       end.compact
     end
