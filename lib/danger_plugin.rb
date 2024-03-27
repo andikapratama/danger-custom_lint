@@ -26,6 +26,7 @@ module Danger
       violations = []
       packages.each do |package|
         report = lint_report(package.to_s)
+        puts report
         violations += parse_custom_lint_violations(report)
       end
 
